@@ -74,7 +74,7 @@ func main() {
 	// dance services
 	Dancerepo := repository.NewDanceRepo(db)
 	DanceService := service.NewDanceService(Dancerepo)
-	fmt.Println("Service initialized successfully")
+	fmt.Println("DB:", host, port, os.Getenv("DB_HOST"), os.Getenv("DB_PORT"))
 
 	// Инициализация Handler и роутов
 	Handler := handler.NewHandler(HolidayService, SongService, DanceService)
