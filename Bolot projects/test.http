@@ -1,0 +1,66 @@
+### Создать праздник
+POST http://localhost:8081/api/holidays/
+Content-Type: application/json
+
+{
+    "title": "Новый Год",
+    "description": "Праздник зимы",
+    "date": "2026-01-01",
+    "image_url": "http://example.com/ny.jpg"
+}
+
+###
+
+### Все праздники
+GET http://localhost:8081/api/holidays/
+
+###
+
+### Праздник по ID
+GET http://localhost:8081/api/holidays/1
+
+###
+
+### Песни праздника
+GET http://localhost:8081/api/holidays/1/songs
+
+###
+
+### Танцы праздника
+GET http://localhost:8081/api/holidays/1/dances
+
+###
+
+### Создать песню
+POST http://localhost:8081/api/songs/
+Content-Type: application/json
+
+{
+    "holiday_id": 1,
+    "title": "В лесу родилась ёлочка",
+    "lyrics": "В лесу родилась ёлочка...",
+    "video_url": "http://example.com/song.mp4"
+}
+
+###
+
+### Песня по ID
+GET http://localhost:8081/api/songs/1
+
+###
+
+### Создать танец
+POST http://localhost:8081/api/dances/
+Content-Type: application/json
+
+{
+    "holiday_id": 1,
+    "title": "Хоровод",
+    "description": "Традиционный новогодний танец",
+    "video_url": "http://example.com/dance.mp4"
+}
+
+###
+
+### Танец по ID
+GET http://localhost:8081/api/dances/1

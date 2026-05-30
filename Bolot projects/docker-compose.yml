@@ -1,0 +1,45 @@
+services:
+  db:
+    image: postgres:18.3-bookworm
+    environment:
+      POSTGRES_USER: Bolot
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: BolotDB
+    ports:
+      - "5322:5432"
+    volumes:
+        - ./db_data:/var/lib/postgresql
+        - ./schema/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U Bolot -d BolotDB -h localhost -p 5432"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  app:
+    build: .
+    ports:
+      - "8081:8081"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ADMIN_PASSWORD: admin123
+      ADMIN_SECRET: BOLOT_SECRET_KEY
+      POSTGRES_USER: Bolot
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: BolotDB
+      HOST: db
+      PORT: 5432
+    volumes:
+      - ./uploads:/uploads
+  frontend:
+    build:
+      context: ./cmd/frontend
+      args:
+        VITE_API_URL: http://localhost:8081/api
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_URL: http://localhost:8081/api
+    depends_on:
+      - app
