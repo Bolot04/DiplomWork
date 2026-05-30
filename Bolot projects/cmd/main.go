@@ -35,7 +35,12 @@ func main() {
 	dbname = os.Getenv("POSTGRES_DB")
 
 	fmt.Println("DB:", host, port)
-
+	if port == "" {
+    port = "5432"
+    }
+    if host == "" {
+    host = "postgres.railway.internal"
+    }
 
 
 
